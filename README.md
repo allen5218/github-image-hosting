@@ -8,9 +8,11 @@
 
 关于html代码部分是借用别人的，上传部分为ChatGPT反复修改而成，结合token，实现网页上传
 
-### 1.获取GitHub的token [https://github.com/settings/tokens/new](https://github.com/settings/tokens/new)
+- 1.获取GitHub的token [https://github.com/settings/tokens/new](https://github.com/settings/tokens/new)
 `注意:token只在新建时能看到，自己保存好，给token仓库的读写权限`
 
-### 2.在GitHub新建一个仓库，比如新建一个IMG出库,再在仓库里新建一个文件夹001用于存放上传的图片
+- 2.在GitHub新建一个仓库（设为公开），比如新建一个IMG出库,再在仓库里新建一个文件夹001用于存放上传的图片
+  `在项目设置里Pages选main /root保存`
+  ![image](https://fastly.jsdelivr.net/gh/2091k/image@main/001/微信截图_20240830132440.png)
 
-### 3.去CloudFlare新建一个workers，名称自己随便，把项目面里的github-workers代码复制到CloudFlare workers里
+- 3.去CloudFlare新建一个workers，名称自己随便，把项目面里的Github-workers代码复制到CloudFlare workers里
