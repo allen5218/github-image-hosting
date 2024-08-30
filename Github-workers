@@ -400,7 +400,7 @@ async function handleUploadRequest(request) {
   
       if (uploadResponse.ok) {
         // 使用 jsDelivr URL 作为图片链接
-        const imageUrl = `https://raw.gitmirror.com/${repo}/${branch}/${filePath}${fileName}`;
+        const imageUrl = `你的CloudFlare cdn 域名/https://raw.githubusercontent.com/${repo}/${branch}/${filePath}${fileName}`;
         return new Response(JSON.stringify({ data: imageUrl }), {
           status: 201,
           headers: { 'Content-Type': 'application/json' }
