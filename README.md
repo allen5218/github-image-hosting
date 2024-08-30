@@ -15,4 +15,12 @@
   `在项目设置里Pages选main /root保存`
   ![image](https://fastly.jsdelivr.net/gh/2091k/image@main/001/微信截图_20240830132440.png)
 
-- 3.去CloudFlare新建一个workers，名称自己随便，把项目面里的Github-workers代码复制到CloudFlare workers里
+- 3.去CloudFlare新建一个workers，名称自己随便，先设置环境变量
+<b>变量名称</b> | <b>值</b>
+-------- | -----
+BRANCH    |  main
+FILE_PATH  |  存放图片的文件夹
+GITHUB_TOKEN  | 你得GitHub token
+REPO          |  你得GitHub名称和仓库名称
+  
+- 4.
