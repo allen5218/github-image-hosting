@@ -400,7 +400,7 @@ async function handleUploadRequest(request) {
   
       if (uploadResponse.ok) {
         // 使用 jsDelivr URL 作为图片链接
-        const imageUrl = `https://jasu.oo.me.eu.org/https://fastly.jsdelivr.net/gh/${repo}@${branch}/${filePath}${fileName}`;
+        const imageUrl = `https://cdn.jsdelivr.net/gh/${repo}@${branch}/${filePath}${fileName}`;
         return new Response(JSON.stringify({ data: imageUrl }), {
           status: 201,
           headers: { 'Content-Type': 'application/json' }
