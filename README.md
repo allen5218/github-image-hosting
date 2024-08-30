@@ -1,5 +1,5 @@
-# GitHub-image-hosting
-####  这是一个CloudFlare workers图床项目
+# [GitHub-image-hosting](https://github.com/2091k/GitHub-image-hosting)
+####  这是一个[CloudFlare workers](https://github.com/2091k/GitHub-image-hosting)图床项目
 用于网页端直接上传图片到GitHub的项目仓库中
 
 初衷是看到Telegraph-Image项目，他是把图片上传到TG了，上传到哪不知道，这样就没有安全感
