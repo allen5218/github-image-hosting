@@ -10,6 +10,8 @@
 
 URL链接采用 raw.gitmirror.com 加速，方便国内访问
 
+`如自己有更好的加速CDN可自行更换`
+
 关于界面问题，有能力的大佬可以优化更加美观一些，我这能力有限
 
 - 1.获取GitHub的token [https://github.com/settings/tokens/new](https://github.com/settings/tokens/new)
