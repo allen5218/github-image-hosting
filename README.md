@@ -10,3 +10,7 @@
 
 ### 1.获取GitHub的token [https://github.com/settings/tokens/new](https://github.com/settings/tokens/new)
 `注意:token只在新建时能看到，自己保存好，给token仓库的读写权限`
+
+### 2.在GitHub新建一个仓库，比如新建一个IMG出库,再在仓库里新建一个文件夹001用于存放上传的图片
+
+### 3.去CloudFlare新建一个workers，名称自己随便，
