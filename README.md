@@ -20,7 +20,7 @@
   
   `在项目设置里Pages选main /root保存`
   
-  ![image](https://fastly.jsdelivr.net/gh/2091k/image@main/001/微信截图_20240830132440.png)
+  ![image](https://jasu.oo.me.eu.org/https://fastly.jsdelivr.net/gh/2091k/image@main/001/微信截图_20240830132440.png)
 
 - 3.去CloudFlare新建一个workers，名称自己随便，先设置环境变量
 
@@ -32,11 +32,11 @@ FILE_PATH  |  存放图片的文件夹
 GITHUB_TOKEN  | 你得GitHub token
 REPO          |  你得GitHub名称和仓库名称
 
-![image](https://fastly.jsdelivr.net/gh/2091k/image@main/001/20240830113523.png)
+![image](https://jasu.oo.me.eu.org/https://fastly.jsdelivr.net/gh/2091k/image@main/001/20240830113523.png)
   
 - 4.填好变量后把Github-workers里的代码复制到CloudFlare workers里，保存好，就完成了
 
-![image](https://fastly.jsdelivr.net/gh/2091k/image@main/001/20240830113133.png)
+![image](https://jasu.oo.me.eu.org/https://fastly.jsdelivr.net/gh/2091k/image@main/001/20240830113133.png)
 
   
 - 5.绑定好自己的域名就好了[https://imges.oo.me.eu.org/](https://imges.oo.me.eu.org/)
@@ -44,4 +44,4 @@ REPO          |  你得GitHub名称和仓库名称
 
 
 ### 感谢支持
-<img src="https://fastly.jsdelivr.net/gh/2091k/image@main/001/20240830141210.png" width="50%" />
+<img src="https://jasu.oo.me.eu.org/https://fastly.jsdelivr.net/gh/2091k/image@main/001/20240830141210.png" width="50%" />
