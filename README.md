@@ -8,8 +8,6 @@
 
 关于html代码部分是借用别人的，上传部分为ChatGPT反复修改而成，结合token，实现网页上传
 
-关于URL采用JSdelivr加速方式，使国内可以访问
-
 关于界面问题，有能力的大佬可以优化更加美观一些，我这能力有限
 
 - 1.获取GitHub的token [https://github.com/settings/tokens/new](https://github.com/settings/tokens/new)
