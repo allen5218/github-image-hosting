@@ -219,7 +219,7 @@ async function handleUploadRequest(request) {
       const jsonResponse = JSON.parse(responseText);
   
       if (uploadResponse.ok) {
-        const imageUrl = `https://raw.githubusercontent.com/${repo}/${branch}/${filePath}${fileName}`;
+        const imageUrl = `https://raw.gitmirror.com/${repo}/${branch}/${filePath}${fileName}`;
         return new Response(JSON.stringify({ data: imageUrl }), {
           status: 201,
           headers: { 'Content-Type': 'application/json' }
