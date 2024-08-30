@@ -8,7 +8,7 @@
 
 关于html代码部分是借用别人的，上传部分为ChatGPT反复修改而成，结合token，实现网页上传
 
-URL链接采用cdn.jsdelivr加速，方便国内访问
+URL链接采用https://raw.gitmirror.com加速，方便国内访问
 
 关于界面问题，有能力的大佬可以优化更加美观一些，我这能力有限
 
