@@ -43,6 +43,19 @@ REPO          |  你得GitHub名称和仓库名称
   
 - 5.绑定好自己的域名就好了[https://imges.oo.me.eu.org/](https://imges.oo.me.eu.org/)
 
+## 示例:
+https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/1921550UIjR.jpg
+
+![image](https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/1921550UIjR.jpg)
+
+https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/003141Q4m3j.jpg
+
+![image](https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/003141Q4m3j.jpg)
+
+https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/232736kbzxa.jpg
+
+![image](https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/232736kbzxa.jpg)
+
 
 
 ### 感谢支持
