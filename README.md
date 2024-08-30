@@ -8,6 +8,10 @@
 
 关于html代码部分是借用别人的，上传部分为ChatGPT反复修改而成，结合token，实现网页上传
 
+关于URL采用JSdelivr加速方式，使国内可以访问
+
+关于界面问题，有能力的大佬可以优化更加美观一些，我这能力有限
+
 - 1.获取GitHub的token [https://github.com/settings/tokens/new](https://github.com/settings/tokens/new)
   
 `注意:token只在新建时能看到，自己保存好，给token仓库的读写权限`
@@ -36,3 +40,8 @@ REPO          |  你得GitHub名称和仓库名称
 
   
 - 5.绑定好自己的域名就好了[https://imges.oo.me.eu.org/](https://imges.oo.me.eu.org/)
+
+
+
+### 感谢支持
+<img src="https://fastly.jsdelivr.net/gh/2091k/image@main/001/20240830141210.png" width="50%" />
