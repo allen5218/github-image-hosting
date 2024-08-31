@@ -33,7 +33,7 @@ function handleRootRequest() {
       <meta name="description" content="GitHub图床-基于Cloudflare Workers">
       <meta name="keywords" content="GitHub图床,Workers图床, Cloudflare, Workers,GitHub, 图床">
       <title>GitHub图床</title>
-      <link rel="icon" href="https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/ico.png" type="image/x-icon">
+      <link rel="icon" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNDguMDAwMDAwcHQiIGhlaWdodD0iNDguMDAwMDAwcHQiIHZpZXdCb3g9IjAgMCA0OC4wMDAwMDAgNDguMDAwMDAwIgogcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCI+Cgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw0OC4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiCmZpbGw9IiMwMDAwMDAiIHN0cm9rZT0ibm9uZSI+CjxwYXRoIGQ9Ik04MCA0MDUgbDAgLTM1IDY1IDAgNjUgMCAwIC0xNzUgMCAtMTc1IDM1IDAgMzUgMCAwIDE3NSAwIDE3NSA2NSAwCjY1IDAgMCAzNSAwIDM1IC0xNjUgMCAtMTY1IDAgMCAtMzV6Ii8+CjwvZz4KPC9zdmc+Cg==" type="image/x-icon">
       <!-- Twitter Bootstrap CSS -->
       <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/twitter-bootstrap/4.6.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
       <!-- Bootstrap FileInput CSS -->
