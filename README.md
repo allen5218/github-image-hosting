@@ -42,7 +42,7 @@ REPO          |  你得GitHub名称和仓库名称
 
 ![image](https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/20240830113523.png)
   
-### 4.填好变量后把Github-workers里的代码复制到CloudFlare workers里，在代码403行https://raw.githubusercontent.com前加入你自己的CF CDN域名保存好，就完成了
+### 4.填好变量后把Github-workers里的代码复制到CloudFlare workers里，在代码403行https://raw.githubusercontent.com  前加入你自己的CF CDN域名保存好，就完成了
 
 ![image](https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/20240830113133.png)
 
