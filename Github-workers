@@ -112,6 +112,26 @@ function handleRootRequest() {
           box-shadow: none;
           border: none;
       }
+      /* 为其他元素定义样式 */
+.card, .card-body, .form-group, textarea, select, input[type="file"], button {
+    /* 默认样式 */
+    background-color: inherit;
+    color: inherit;
+    border-color: inherit;
+}
+
+/* 特定元素在夜间模式下的样式 */
+body.night-mode .card,
+body.night-mode .card-body,
+body.night-mode .form-group,
+body.night-mode textarea,
+body.night-mode select,
+body.night-mode input[type="file"],
+body.night-mode button {
+    background-color: #333333;
+    color: #ffffff;
+    border-color: #555555;
+}
       </style>
   </head>
   <body class="day-mode">
@@ -154,15 +174,25 @@ function handleRootRequest() {
       </div> 
 <script>
 $(document).ready(function() {
+  // 检查本地存储中是否有模式选择
+  if (localStorage.getItem('mode') === 'night') {
+      $('body').addClass('night-mode').removeClass('day-mode');
+      $('#modeToggle').text('🌙');
+  } else {
+      $('body').addClass('day-mode').removeClass('night-mode');
+      $('#modeToggle').text('🌞');
+  }
   // 模式切换逻辑
   $('#modeToggle').on('click', function() {
       $('body').toggleClass('night-mode day-mode');
 
       // 切换按钮图标
       if ($('body').hasClass('night-mode')) {
-          $(this).text('☀️');
-      } else {
           $(this).text('🌙');
+          localStorage.setItem('mode', 'night');
+      } else {
+          $(this).text('🌞');
+          localStorage.setItem('mode', 'day');
       }
 
       // 强制更新所有相关元素的样式
@@ -170,7 +200,7 @@ $(document).ready(function() {
           'background-color': $('body').css('background-color'),
           'color': $('body').css('color'),
           'border-color': $('body').css('border-color')
-      });
+        });
   });
 
   // 初始化文件上传 
