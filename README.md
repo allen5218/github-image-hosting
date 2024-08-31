@@ -1,7 +1,7 @@
 # 图床[GitHub-image-hosting](https://github.com/2091k/GitHub-image-hosting)
 ### 2024.8.31号更新
 
-> 添加暗夜模式，修复网页刷新变回白天模式
+> 添加暗夜模式，修复网页刷新变回白天模式,修改上传图片名称改为时间格式XXXX-XX-XX-XX-XX-XX
 
 <img src="https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/bbbbbb.jpg" style="width: 50%;"/><img src="https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/aaaaaaaa.png" style="width: 50%;"/> 
 
