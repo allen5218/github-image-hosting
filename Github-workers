@@ -24,83 +24,154 @@ async function handleRequest(request) {
 
 // 处理根路径请求的函数，返回 HTML 页面
 function handleRootRequest() {
-    const html = `
-    <!DOCTYPE html>
+  const html = `
+  <!DOCTYPE html>
   <html lang="zh-CN">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
-    <meta name="description" content="GitHub图床-基于Cloudflare Workers">
-    <meta name="keywords" content="GitHub图床,Workers图床, Cloudflare, Workers,GitHub, 图床">
-    <title>GitHub图床</title>
-    <link rel="icon" href="data:image/x-icon;base64,AAABAAEAMDAAAAEAIACoJQAAFgAAACgAAAAwAAAAYAAAAAEAIAAAAAAAAAAAABMLAAATCwAAAAAAAAAAAAD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5qamv85OTn/OTk5/zk5Of85OTn/OTk5/zk5Of85OTn/kpKS//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5aWlv80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/j4+P//7+/v///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////5eXl/80NDT/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/kJCQ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+vr6/+7u7v/t7e3/7e3t/+3t7f/t7e3/7e3t/+3t7f/t7e3/7e3t/+3t7f/t7e3/7u7u/46Ojv8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/h4eH/+zs7P/u7u7/7e3t/+3t7f/t7e3/7e3t/+3t7f/t7e3/7e3t/+3t7f/t7e3/7u7u//r6+v//////////////////////////////////////////////////////////////////////1NTU/2tra/9iYmL/ZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/Y2Nj/0pKSv8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/SUlJ/2NjY/9kZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP9kZGT/ZGRk/2RkZP9iYmL/a2tr/9TU1P//////////////////////////////////////////////////////////////////////yMjI/zs7O/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/Ozs7/8jIyP//////////////////////////////////////////////////////////////////////ycnJ/z09Pf8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/PT09/8nJyf//////////////////////////////////////////////////////////////////////ycnJ/z09Pf8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/PT09/8nJyf//////////////////////////////////////////////////////////////////////ycnJ/z09Pf8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/PT09/8nJyf//////////////////////////////////////////////////////////////////////ycnJ/z09Pf8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/MzMz/zMzM/8zMzP/PT09/8nJyf//////////////////////////////////////////////////////////////////////ysrK/0NDQ/85OTn/OTk5/zk5Of85OTn/OTk5/zk5Of85OTn/OTk5/zk5Of85OTn/OTk5/zk5Of85OTn/OTk5/zk5Of85OTn/OTk5/zk5Of85OTn/OTk5/zk5Of85OTn/OTk5/zk5Of85OTn/OTk5/zk5Of85OTn/OTk5/zk5Of85OTn/Q0ND/8rKyv////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" type="image/x-icon">
-    <!-- Twitter Bootstrap CSS -->
-    <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/twitter-bootstrap/4.6.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <!-- Bootstrap FileInput CSS -->
-    <link href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-fileinput/5.2.7/css/fileinput.min.css" type="text/css" rel="stylesheet" />
-    <!-- Toastr CSS -->
-    <link href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/toastr.js/2.1.4/toastr.min.css" type="text/css" rel="stylesheet" />
-    <!-- jQuery -->
-    <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" type="application/javascript"></script>
-    <!-- Bootstrap FileInput JS -->
-    <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-fileinput/5.2.7/js/fileinput.min.js" type="application/javascript"></script>
-    <!-- Bootstrap FileInput Chinese Locale JS -->
-    <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-fileinput/5.2.7/js/locales/zh.min.js" type="application/javascript"></script>
-    <!-- Toastr JS -->
-    <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/toastr.js/2.1.4/toastr.min.js" type="application/javascript"></script> 
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Long+Cang&display=swap');
-    
-    .title {
-      font-family: "Long Cang", cursive;
-      font-weight: 400;
-      font-style: normal;
-      font-size: 2em; /* 调整字体大小 */
-      text-align: center;
-      margin-top: 20px; /* 调整距离顶部的距离 */
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 添加阴影效果 */
-    }
-    </style>
-    </head> 
-    <body>
-    <div class="card">
-    <div class="title">Hello GitHub图床</div>
-    <div class="card-body">
-      <!-- 表单 -->
-      <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
-        <!-- 接口选择下拉菜单 -->
-        <div class="form-group mb-3">
-          <select class="custom-select" id="interfaceSelector" name="interface">
-            <option value="tg">GitHub</option>
-          </select>
-        </div>
-        <!-- 文件选择 -->
-        <div class="form-group mb-3">
-          <input id="fileInput" name="file" type="file" class="form-control-file" data-browse-on-zone-click="true">
-        </div>            
-        <!-- 添加按钮组 -->
-        <div class="form-group mb-3" style="display: none;"> <!-- 初始隐藏 -->
-          <button type="button" class="btn btn-light mr-2" id="urlBtn">URL</button>
-          <button type="button" class="btn btn-light mr-2" id="bbcodeBtn">BBCode</button>
-          <button type="button" class="btn btn-light" id="markdownBtn">Markdown</button>
-        </div>
-        <!-- 文件链接文本框 -->
-        <div class="form-group mb-3" style="display: none;"> <!-- 初始隐藏 -->
-          <textarea class="form-control" id="fileLink" readonly></textarea>
-        </div>
-        <!-- 上传中的提示 -->
-        <div id="uploadingText" style="display: none; text-align: center;">文件上传中...</div>
-        <!-- 压缩中的提示 -->
-        <div id="compressingText" style="display: none; text-align: center;">图片压缩中...</div>
-      </form>
-    </div>
-    <p style="font-size: 14px; text-align: center; position: fixed; bottom: 0; width: 100%; padding: 10px 0;  solid #ccc;">
-    一叶知秋-魏无羡 GitHub - <a href="https://github.com/2091k/GitHub-image-hosting" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: none;">2091k/GitHub-image-hosting</a>
-</p> 
-  </div>  
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+      <meta name="description" content="GitHub图床-基于Cloudflare Workers">
+      <meta name="keywords" content="GitHub图床,Workers图床, Cloudflare, Workers,GitHub, 图床">
+      <title>GitHub图床</title>
+      <link rel="icon" href="https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/ico.png" type="image/x-icon">
+      <!-- Twitter Bootstrap CSS -->
+      <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/twitter-bootstrap/4.6.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+      <!-- Bootstrap FileInput CSS -->
+      <link href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-fileinput/5.2.7/css/fileinput.min.css" type="text/css" rel="stylesheet" />
+      <!-- Toastr CSS -->
+      <link href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/toastr.js/2.1.4/toastr.min.css" type="text/css" rel="stylesheet" />
+      <!-- jQuery -->
+      <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" type="application/javascript"></script>
+      <!-- Bootstrap FileInput JS -->
+      <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-fileinput/5.2.7/js/fileinput.min.js" type="application/javascript"></script>
+      <!-- Bootstrap FileInput Chinese Locale JS -->
+      <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-fileinput/5.2.7/js/locales/zh.min.js" type="application/javascript"></script>
+      <!-- Toastr JS -->
+      <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/toastr.js/2.1.4/toastr.min.js" type="application/javascript"></script> 
+      <style>
+      @import url('https://fonts.googleapis.com/css2?family=Long+Cang&display=swap');
+      
+      .title {
+          font-family: "Long Cang", cursive;
+          font-weight: 400;
+          font-style: normal;
+          font-size: 2em; /* 调整字体大小 */
+          text-align: center;
+          margin-top: 20px; /* 调整距离顶部的距离 */
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 添加阴影效果 */
+      }
+      
+      /* 日间模式和夜间模式的样式 */
+      .day-mode {
+          background-color: #ffffff;
+          color: #000000;
+      }
+  
+      .night-mode {
+          background-color: #2c2c2c;
+          color: #f5f5f5;
+      }
+  
+      /* 按钮样式 */
+      .mode-toggle {
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          background-color: transparent;
+          border: none;
+          font-size: 1.5em;
+          cursor: pointer;
+          z-index: 1000;
+      }
+  
+      /* 应用到整个页面的背景和文字颜色 */
+      body.night-mode {
+          background-color: #2c2c2c;
+          color: #f5f5f5;
+      }
+  
+      body.day-mode {
+          background-color: #ffffff;
+          color: #000000;
+      }
+  
+      /* 强制覆盖默认样式，确保在两种模式下都能应用 */
+      .card,
+      .card-body,
+      .form-group,
+      textarea,
+      select,
+      input[type="file"],
+      button {
+          background-color: inherit;
+          color: inherit;
+          border-color: inherit;
+      }
+  
+      .card {
+          box-shadow: none;
+          border: none;
+      }
+      </style>
+  </head>
+  <body class="day-mode">
+      <!-- 模式切换按钮 -->
+      <button class="mode-toggle" id="modeToggle">🌙</button>
+      <div class="card">
+          <div class="title">Hello GitHub图床</div>
+          <div class="card-body">
+              <!-- 表单 -->
+              <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+                  <!-- 接口选择下拉菜单 -->
+                  <div class="form-group mb-3">
+                      <select class="custom-select" id="interfaceSelector" name="interface">
+                          <option value="tg">GitHub</option>
+                      </select>
+                  </div>
+                  <!-- 文件选择 -->
+                  <div class="form-group mb-3">
+                      <input id="fileInput" name="file" type="file" class="form-control-file" data-browse-on-zone-click="true">
+                  </div>            
+                  <!-- 添加按钮组 -->
+                  <div class="form-group mb-3" style="display: none;"> <!-- 初始隐藏 -->
+                      <button type="button" class="btn btn-light mr-2" id="urlBtn">URL</button>
+                      <button type="button" class="btn btn-light mr-2" id="bbcodeBtn">BBCode</button>
+                      <button type="button" class="btn btn-light" id="markdownBtn">Markdown</button>
+                  </div>
+                  <!-- 文件链接文本框 -->
+                  <div class="form-group mb-3" style="display: none;"> <!-- 初始隐藏 -->
+                      <textarea class="form-control" id="fileLink" readonly></textarea>
+                  </div>
+                  <!-- 上传中的提示 -->
+                  <div id="uploadingText" style="display: none; text-align: center;">文件上传中...</div>
+                  <!-- 压缩中的提示 -->
+                  <div id="compressingText" style="display: none; text-align: center;">图片压缩中...</div>
+              </form>
+          </div>
+          <p style="font-size: 14px; text-align: center; position: fixed; bottom: 0; width: 100%; padding: 10px 0; solid #ccc;">
+              一叶知秋-魏无羡 GitHub - <a href="https://github.com/2091k/GitHub-image-hosting" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: none;">2091k/GitHub-image-hosting</a>
+          </p>
+      </div> 
 <script>
 $(document).ready(function() {
-  let originalImageURL = '';
+  // 模式切换逻辑
+  $('#modeToggle').on('click', function() {
+      $('body').toggleClass('night-mode day-mode');
+
+      // 切换按钮图标
+      if ($('body').hasClass('night-mode')) {
+          $(this).text('☀️');
+      } else {
+          $(this).text('🌙');
+      }
+
+      // 强制更新所有相关元素的样式
+      $('.card, .card-body, .form-group, textarea, select, input[type="file"], button').css({
+          'background-color': $('body').css('background-color'),
+          'color': $('body').css('color'),
+          'border-color': $('body').css('border-color')
+      });
+  });
 
   // 初始化文件上传 
   initFileInput();
