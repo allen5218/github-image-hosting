@@ -94,9 +94,9 @@ function handleRootRequest() {
         <div id="compressingText" style="display: none; text-align: center;">图片压缩中...</div>
       </form>
     </div>
-    <p style="font-size: 14px; text-align: center; position: fixed; bottom: 0; width: 100%; background: #f0f0f0; padding: 10px 0; border-top: 1px solid #ccc;">
+    <p style="font-size: 14px; text-align: center; position: fixed; bottom: 0; width: 100%; padding: 10px 0;  solid #ccc;">
     一叶知秋-魏无羡 GitHub - <a href="https://github.com/2091k/GitHub-image-hosting" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: none;">2091k/GitHub-image-hosting</a>
-  </p>  
+</p> 
   </div>  
 <script>
 $(document).ready(function() {
