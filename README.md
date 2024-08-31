@@ -1,4 +1,8 @@
 # 图床[GitHub-image-hosting](https://github.com/2091k/GitHub-image-hosting)
+### 2024.8.31号更新
+
+> 添加暗夜模式，让白光不在刺眼
+
 ####  这是一个[CloudFlare workers](https://github.com/2091k/GitHub-image-hosting)图床项目
 用于网页端直接上传图片到GitHub的项目仓库中
 
