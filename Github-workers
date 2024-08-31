@@ -459,96 +459,97 @@ $(document).ready(function() {
     return new Response(html, { headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
   }
   
-
 // 处理上传请求的函数
 async function handleUploadRequest(request) {
-    try {
-      const formData = await request.formData();
-      const file = formData.get('file');
-  
-      if (!file) {
-        throw new Error('Missing file');
+  try {
+    const formData = await request.formData();
+    const file = formData.get('file');
+
+    if (!file) {
+      throw new Error('Missing file');
+    }
+
+    const originalFileName = file.name;
+    const fileExtension = originalFileName.split('.').pop();
+
+    // 获取当前时间并转换为北京时间 (UTC+8)
+    const now = new Date();
+    const utcOffset = 8 * 60; // 北京时间为 UTC+8
+    now.setMinutes(now.getMinutes() + utcOffset);
+    const formattedDate = now.toISOString()
+      .replace(/T/, '-')
+      .replace(/\..+/, '')
+      .replace(/:/g, '-');
+    const fileName = `${formattedDate}.${fileExtension}`;
+
+    // 1. 检查文件是否已经存在
+    const checkUrl = `https://api.github.com/repos/${repo}/contents/${filePath}${fileName}?ref=${branch}`;
+    const checkResponse = await fetch(checkUrl, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${githubToken}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'Cloudflare Worker'
       }
-  
-      const originalFileName = file.name;
-      let fileName = originalFileName;
-  
-      // 1. 检查文件是否已经存在
-      const checkUrl = `https://api.github.com/repos/${repo}/contents/${filePath}${fileName}?ref=${branch}`;
-      const checkResponse = await fetch(checkUrl, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${githubToken}`,
-          'Accept': 'application/vnd.github.v3+json',
-          'User-Agent': 'Cloudflare Worker'
-        }
+    });
+
+    // 2. 准备上传文件
+    const fileStream = file.stream();
+    const reader = fileStream.getReader();
+    let fileContent = '';
+    let done = false;
+
+    // Convert file content to base64 in chunks
+    while (!done) {
+      const { value, done: readerDone } = await reader.read();
+      done = readerDone;
+      if (value) {
+        fileContent += String.fromCharCode(...new Uint8Array(value));
+      }
+    }
+
+    const base64Content = btoa(fileContent);
+    const uploadUrl = `https://api.github.com/repos/${repo}/contents/${filePath}${fileName}`;
+
+    const uploadData = {
+      message: `上传图片: ${fileName}`,
+      content: base64Content,
+      branch: branch
+    };
+
+    const uploadResponse = await fetch(uploadUrl, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${githubToken}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'Cloudflare Worker'
+      },
+      body: JSON.stringify(uploadData)
+    });
+
+    const responseText = await uploadResponse.text();
+    const jsonResponse = JSON.parse(responseText);
+
+    if (uploadResponse.ok) {
+      // 使用 jsDelivr URL 作为图片链接
+      const imageUrl = `你的CloudFlare cdn 域名/https://raw.githubusercontent.com/${repo}/${branch}/${filePath}${fileName}`;
+      return new Response(JSON.stringify({ data: imageUrl }), {
+        status: 201,
+        headers: { 'Content-Type': 'application/json' }
       });
-  
-      if (checkResponse.ok) {
-        // 如果文件存在，生成随机文件名
-        const randomString = Array.from(crypto.getRandomValues(new Uint8Array(8)))
-          .map(b => b.toString(16).padStart(2, '0')).join('');
-        fileName = `${randomString}.${fileName.split('.').pop()}`;
-      }
-  
-      // 2. 准备上传文件
-      const fileStream = file.stream();
-      const reader = fileStream.getReader();
-      let fileContent = '';
-      let done = false;
-  
-      // Convert file content to base64 in chunks
-      while (!done) {
-        const { value, done: readerDone } = await reader.read();
-        done = readerDone;
-        if (value) {
-          fileContent += String.fromCharCode(...new Uint8Array(value));
-        }
-      }
-  
-      const base64Content = btoa(fileContent);
-      const uploadUrl = `https://api.github.com/repos/${repo}/contents/${filePath}${fileName}`;
-  
-      const uploadData = {
-        message: `上传图片: ${fileName}`,
-        content: base64Content,
-        branch: branch
-      };
-  
-      const uploadResponse = await fetch(uploadUrl, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${githubToken}`,
-          'Content-Type': 'application/json',
-          'Accept': 'application/vnd.github.v3+json',
-          'User-Agent': 'Cloudflare Worker'
-        },
-        body: JSON.stringify(uploadData)
-      });
-  
-      const responseText = await uploadResponse.text();
-      const jsonResponse = JSON.parse(responseText);
-  
-      if (uploadResponse.ok) {
-        // 使用 jsDelivr URL 作为图片链接
-        const imageUrl = `你的CloudFlare cdn 域名/https://raw.githubusercontent.com/${repo}/${branch}/${filePath}${fileName}`;
-        return new Response(JSON.stringify({ data: imageUrl }), {
-          status: 201,
-          headers: { 'Content-Type': 'application/json' }
-        });
-      } else {
-        console.error('GitHub upload failed:', responseText);
-        return new Response(JSON.stringify({ error: 'GitHub upload failed', details: responseText }), {
-          status: 500,
-          headers: { 'Content-Type': 'application/json' }
-        });
-      }
-    } catch (error) {
-      console.error('Internal Server Error:', error.message);
-      return new Response(JSON.stringify({ error: 'Internal Server Error', message: error.message }), {
+    } else {
+      console.error('GitHub upload failed:', responseText);
+      return new Response(JSON.stringify({ error: 'GitHub upload failed', details: responseText }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' }
       });
     }
+  } catch (error) {
+    console.error('Internal Server Error:', error.message);
+    return new Response(JSON.stringify({ error: 'Internal Server Error', message: error.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
-  
+}
