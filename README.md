@@ -3,7 +3,7 @@
 
 > 添加暗夜模式，修复网页刷新变回白天模式，修改上传图片名称改为时间格式YYYYMMDDHHMMSS_10位随机字母
 
-<img src="https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/20240831190329.png" style="width: 50%;"/><img src="https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/20240831190411.png" style="width: 50%;"/> 
+<img src="https://img.oo.me.eu.org/2091k/image/main/001/20240831190329.png" style="width: 50%;"/><img src="https://img.oo.me.eu.org/2091k/image/main/001/20240831190411.png" style="width: 50%;"/> 
 
 ####  这是一个[CloudFlare workers](https://github.com/2091k/GitHub-image-hosting)图床项目
 用于网页端直接上传图片到GitHub的项目仓库中
@@ -28,7 +28,7 @@ URL链接采用 CF workers CDN 加速，方便国内访问 图床请勿滥用
   
   `在项目设置里Pages选main /root保存`
   
-  ![image](https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/微信截图_20240830132440.png)
+  ![image](https://img.oo.me.eu.org/2091k/image/main/001/微信截图_20240830132440.png)
 
 ### 3.去CloudFlare新建一个workers，名称自己随便，先设置环境变量
 
@@ -40,29 +40,29 @@ FILE_PATH  |  存放图片的文件夹
 GITHUB_TOKEN  | 你得GitHub token
 REPO          |  你得GitHub名称和仓库名称
 
-![image](https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/20240830113523.png)
+![image](https://img.oo.me.eu.org/2091k/image/main/001/20240830113523.png)
   
-### 4.填好变量后把Github-workers里的代码复制到CloudFlare workers里，在代码403行https://raw.githubusercontent.com  前加入你自己的CF CDN域名保存好，就完成了
+### 4.填好变量后把Github-workers里的代码复制到CloudFlare workers里，在代码544行把https://raw.githubusercontent.com  替换成你自己的加速域名，就完成了
 
-![image](https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/20240830113133.png)
+![image](https://img.oo.me.eu.org/2091k/image/main/001/20240830113133.png)
 
   
 ### 5.绑定好自己的域名就好了[https://imges.oo.me.eu.org/](https://imges.oo.me.eu.org/)
 
 ## 示例:
-https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/1921550UIjR.jpg
+https://img.oo.me.eu.org/2091k/image/main/001/1921550UIjR.jpg
 
-![image](https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/1921550UIjR.jpg)
+![image](https://img.oo.me.eu.org/2091k/image/main/001/1921550UIjR.jpg)
 
-https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/003141Q4m3j.jpg
+https://img.oo.me.eu.org/2091k/image/main/001/003141Q4m3j.jpg
 
-![image](https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/003141Q4m3j.jpg)
+![image](https://img.oo.me.eu.org/2091k/image/main/001/003141Q4m3j.jpg)
 
-https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/232736kbzxa.jpg
+https://img.oo.me.eu.org/2091k/image/main/001/232736kbzxa.jpg
 
-![image](https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/232736kbzxa.jpg)
+![image](https://img.oo.me.eu.org/2091k/image/main/001/232736kbzxa.jpg)
 
 
 
 ### 感谢支持
-<img src="https://jasu.oo.me.eu.org/https://raw.githubusercontent.com/2091k/image/main/001/20240830141210.png" width="80%" />
+<img src="https://img.oo.me.eu.org/2091k/image/main/001/20240830141210.png" width="80%" />
