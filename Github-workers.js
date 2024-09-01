@@ -540,7 +540,7 @@ async function handleUploadRequest(request) {
     const jsonResponse = JSON.parse(responseText);
 
     if (uploadResponse.ok) {
-      // 使用 jsDelivr URL 作为图片链接
+      // 下面链接替换成你自己的加速域名https://raw.githubusercontent.com/
       const imageUrl = `https://raw.githubusercontent.com/${repo}/${branch}/${filePath}${fileName}`;
       return new Response(JSON.stringify({ data: imageUrl }), {
         status: 201,
