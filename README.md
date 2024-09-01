@@ -16,7 +16,7 @@
 
 URL链接采用 CF workers CDN 加速，方便国内访问 图床请勿滥用
 
-`CF workers加速CDN代码在dm/workers.js,也是部署CF workers方法，绑定自己的域名，使用方法https://cf.wokers.dev/你的图床链接  代码403行`
+`CF workers加速CDN代码在dm/workers.js,也是部署CF workers方法，绑定自己的域名，使用方法https://xxx.wokers.dev/替换https://raw.githubusercontent.com  代码544行`
 
 关于界面问题，有能力的大佬可以优化更加美观一些，我这能力有限
 
