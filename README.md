@@ -3,7 +3,7 @@
 
 > 添加暗夜模式，修复网页刷新变回白天模式，修改上传图片名称改为时间格式YYYYMMDDHHMMSS_10位随机字母
 
-<img src="https://img.oo.me.eu.org/2091k/image/main/001/20240831190329.png" style="width: 50%;"/><img src="https://img.oo.me.eu.org/2091k/image/main/001/20240831190411.png" style="width: 50%;"/> 
+<img src="https://img.oo.me.eu.org/2091k/image/main/001/20240901110144_9gvtmjpjsy.png" style="width: 50%;"/><img src="https://img.oo.me.eu.org/2091k/image/main/001/20240901110242_s0w8qlieex.png" style="width: 50%;"/> 
 
 ####  这是一个[CloudFlare workers](https://github.com/2091k/GitHub-image-hosting)图床项目
 用于网页端直接上传图片到GitHub的项目仓库中
