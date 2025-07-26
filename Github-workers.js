@@ -28,28 +28,28 @@ function handleRootRequest() {
   <!DOCTYPE html>
   <html lang="zh-CN"
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
-      <meta name="description" content="GitHub图床-基于Cloudflare Workers">
-      <meta name="keywords" content="GitHub图床,Workers图床, Cloudflare, Workers,GitHub, 图床">
-      <title>GitHub图床</title>
-      <link rel="icon" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNDguMDAwMDAwcHQiIGhlaWdodD0iNDguMDAwMDAwcHQiIHZpZXdCb3g9IjAgMCA0OC4wMDAwMDAgNDguMDAwMDAwIgogcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCI+Cgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw0OC4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiCmZpbGw9IiMwMDAwMDAiIHN0cm9rZT0ibm9uZSI+CjxwYXRoIGQ9Ik04MCA0MDUgbDAgLTM1IDY1IDAgNjUgMCAwIC0xNzUgMCAtMTc1IDM1IDAgMzUgMCAwIDE3NSAwIDE3NSA2NSAwCjY1IDAgMCAzNSAwIDM1IC0xNjUgMCAtMTY1IDAgMCAtMzV6Ii8+CjwvZz4KPC9zdmc+Cg==" type="image/x-icon">
-      <!-- Twitter Bootstrap CSS -->
-      <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/twitter-bootstrap/4.6.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-      <!-- Bootstrap FileInput CSS -->
-      <link href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-fileinput/5.2.7/css/fileinput.min.css" type="text/css" rel="stylesheet" />
-      <!-- Toastr CSS -->
-      <link href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/toastr.js/2.1.4/toastr.min.css" type="text/css" rel="stylesheet" />
-      <!-- jQuery -->
-      <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js" type="application/javascript"></script>
-      <!-- Bootstrap FileInput JS -->
-      <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-fileinput/5.2.7/js/fileinput.min.js" type="application/javascript"></script>
-      <!-- Bootstrap FileInput Chinese Locale JS -->
-      <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap-fileinput/5.2.7/js/locales/zh.min.js" type="application/javascript"></script>
-      <!-- Toastr JS -->
-      <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/toastr.js/2.1.4/toastr.min.js" type="application/javascript"></script> 
-      <style>
-      @import url('https://fonts.googleapis.com/css2?family=Long+Cang&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+  <meta name="description" content="GitHub图床-基于Cloudflare Workers">
+  <meta name="keywords" content="GitHub图床,Workers图床, Cloudflare, Workers,GitHub, 图床">
+  <title>GitHub图床</title>
+  <link rel="icon" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNDguMDAwMDAwcHQiIGhlaWdodD0iNDguMDAwMDAwcHQiIHZpZXdCb3g9IjAgMCA0OC4wMDAwMDAgNDguMDAwMDAwIgogcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCI+Cgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw0OC4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiCmZpbGw9IiMwMDAwMDAiIHN0cm9rZT0ibm9uZSI+CjxwYXRoIGQ9Ik04MCA0MDUgbDAgLTM1IDY1IDAgNjUgMCAwIC0xNzUgMCAtMTc1IDM1IDAgMzUgMCAwIDE3NSAwIDE3NSA2NSAwCjY1IDAgMCAzNSAwIDM1IC0xNjUgMCAtMTY1IDAgMCAtMzV6Ii8+CjwvZz4KPC9zdmc+Cg==" type="image/x-icon">
+  <!-- Twitter Bootstrap CSS（替换为BootCDN） -->
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+  <!-- Bootstrap FileInput CSS（替换为jsDelivr） -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-fileinput@5.2.7/css/fileinput.min.css" type="text/css" rel="stylesheet" />
+  <!-- Toastr CSS（替换为BootCDN） -->
+  <link href="https://cdn.bootcdn.net/ajax/libs/toastr.js/2.1.4/toastr.min.css" type="text/css" rel="stylesheet" />
+  <!-- jQuery（替换为BootCDN） -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js" type="application/javascript"></script>
+  <!-- Bootstrap FileInput JS（替换为jsDelivr） -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-fileinput@5.2.7/js/fileinput.min.js" type="application/javascript"></script>
+  <!-- Bootstrap FileInput Chinese Locale JS（替换为jsDelivr） -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-fileinput@5.2.7/js/locales/zh.min.js" type="application/javascript"></script>
+  <!-- Toastr JS（替换为BootCDN） -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/toastr.js/2.1.4/toastr.min.js" type="application/javascript"></script> 
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Long+Cang&display=swap');
       
       .title {
           font-family: "Long Cang", cursive;
