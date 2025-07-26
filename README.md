@@ -1,4 +1,7 @@
 # 图床[GitHub-image-hosting](https://github.com/2091k/GitHub-image-hosting)
+### 2025.07.26更新
+> 修复 css js 代码失效问题
+
 ### 2024.8.31号更新
 
 > 添加暗夜模式，修复网页刷新变回白天模式，修改上传图片名称改为时间格式YYYYMMDDHHMMSS_10位随机字母
