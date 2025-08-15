@@ -46,7 +46,7 @@ Select scopes 中，務必勾選 repo 這個權限。
 ###  步驟二：建立一個用於儲存圖片的 GitHub 倉庫
 在 GitHub 上建立一個新的公開 (Public) 倉庫。倉庫名稱可以自訂，例如 image-hosting 或 my-images。
 
-倉庫建立後，記下您的「使用者名稱/倉庫名稱」，例如 allen5218/img。
+倉庫建立後，記下您的「使用者名稱/倉庫名稱」，例如 xxxx/img。
 
 ###  步驟三：部署到 Cloudflare Workers
 登入 Cloudflare 儀表板，進入 Workers & Pages。
