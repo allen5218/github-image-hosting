@@ -27,6 +27,7 @@
 - 一個 Cloudflare 帳號。
 
 ###  步驟一：建立 GitHub Personal Access Token
+
 您需要一個 GitHub Token 來讓 Worker 有權限上傳檔案到您的倉庫。
 
 前往 GitHub 的 Personal access tokens (classic) 頁面。
@@ -44,11 +45,13 @@ Select scopes 中，務必勾選 repo 這個權限。
 請務必立即複製並妥善保存產生的 Token，因為這個頁面關閉後就再也看不到了。
 
 ###  步驟二：建立一個用於儲存圖片的 GitHub 倉庫
+
 在 GitHub 上建立一個新的公開 (Public) 倉庫。倉庫名稱可以自訂，例如 image-hosting 或 my-images。
 
 倉庫建立後，記下您的「使用者名稱/倉庫名稱」，例如 xxxx/img。
 
 ###  步驟三：部署到 Cloudflare Workers
+
 登入 Cloudflare 儀表板，進入 Workers & Pages。
 
 點擊 Create Worker > Start with Hello World!
@@ -62,6 +65,7 @@ Select scopes 中，務必勾選 repo 這個權限。
 點擊右上角的 Save and deploy。
 
 ###  步驟四：設定環境變數
+
 這是最關鍵的一步，讓 Worker 知道要把圖片上傳到哪裡。
 
 回到 Worker 的管理頁面，點擊 Settings > Variables。
@@ -79,6 +83,7 @@ REPO          |  你得GitHub名稱和倉庫名稱
 設定完成後，點擊 Save and deploy。
 
 ###  步驟五 (可選)：綁定自訂網域
+
 在 Worker 管理頁面，點擊 Triggers。
 
 在 Custom Domains 區塊，點擊 Add Custom Domain。
@@ -87,10 +92,11 @@ REPO          |  你得GitHub名稱和倉庫名稱
 
 恭喜！ 現在您可以透過 Worker 的網址或您的自訂網域來訪問您的專屬圖床了。
 
-🛠️ 使用方式
+##🛠️ 使用方式
+
 上傳：直接將圖片檔案拖曳到上傳區域，或點擊「瀏覽」按鈕選擇檔案，也可以直接從剪貼簿貼上圖片。
 
 複製連結：上傳成功後，會自動顯示圖片的 CDN 連結。您可以點擊 URL、BBCode、Markdown 按鈕來切換格式並自動複製到剪貼簿。
 
-🙏 致謝
+##🙏 致謝
 本專案基於 2091k/GitHub-image-hosting 進行修改與優化。
