@@ -1,7 +1,3 @@
-# 图床
-
-####  这是一个[CloudFlare workers](https://github.com/2091k/GitHub-image-hosting)图床项目
-用于网页端直接上传图片到GitHub的项目仓库中
 # GitHub + Cloudflare Worker 免費圖床
 這是一個基於 Cloudflare Workers 和 GitHub API 打造的免費、高速、穩定的個人圖床解決方案。您可以透過簡單的設定，將您的 GitHub 公開倉庫變成一個擁有 CDN 加速的無限容量圖床。
 
