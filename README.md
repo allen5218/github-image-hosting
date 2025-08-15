@@ -51,7 +51,7 @@ Select scopes 中，務必勾選 repo 這個權限。
 ###  步驟三：部署到 Cloudflare Workers
 登入 Cloudflare 儀表板，進入 Workers & Pages。
 
-點擊 Create application > Create Worker。
+點擊 Create Worker > Start with Hello World!
 
 為您的 Worker 自訂一個名稱，然後點擊 Deploy。
 
@@ -67,34 +67,12 @@ Select scopes 中，務必勾選 repo 這個權限。
 回到 Worker 的管理頁面，點擊 Settings > Variables。
 
 在 Environment Variables 區塊，點擊 Add variable，並依序新增以下四個變數：
-
-變數名稱
-
-值
-
-說明
-
-GITHUB_TOKEN
-
-ghp_xxxxxxxx
-
-您在步驟一中產生的 GitHub Personal Access Token。
-
-REPO
-
-您的使用者名稱/倉庫名稱
-
-您在步驟二中建立的倉庫路徑，例如 allen5218/img。
-
-BRANCH
-
-main
-
-您想儲存圖片的分支名稱，通常是 main 或 master。
-
-FILE_PATH
-
-img/
+<b>變量名稱</b> | <b>值</b>
+-------- | -----
+BRANCH    |  main
+FILE_PATH  |  存放圖片的文件夾
+GITHUB_TOKEN  | 你得GitHub token
+REPO          |  你得GitHub名稱和倉庫名稱
 
 圖片儲存在倉庫中的資料夾路徑。建議以 / 結尾。如果想存放在根目錄，此欄位可留空。
 
