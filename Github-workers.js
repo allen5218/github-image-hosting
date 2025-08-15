@@ -1,457 +1,383 @@
-// 获取环境变量
-const githubToken = GITHUB_TOKEN;
-const repo = REPO;
-const branch = BRANCH;
-const filePath = FILE_PATH;
+// =================================================
+// GITHUB IMAGE HOSTING - CLOUDFLARE WORKER
+// Author: 2091k
+// Modified and fixed by Gemini
+// =================================================
 
-// 监听 fetch 事件
+// --- 環境變數 ---
+// 請在 Cloudflare Worker 的設定中配置以下變數
+// GITHUB_TOKEN: 你的 GitHub Personal Access Token，需要有 repo 權限
+// REPO: 你的 GitHub 倉庫，格式為 '使用者名稱/倉庫名稱'，例如 '2091k/GitHub-image-hosting'
+// BRANCH: 你要儲存圖片的分支，例如 'main'
+// FILE_PATH: 檔案儲存在倉庫中的路徑，記得以 '/' 結尾，例如 'images/' 或留空 '' 代表根目錄
+
+// 監聽 fetch 事件
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
 });
 
-// 处理请求的函数
+/**
+ * 處理所有傳入的請求
+ * @param {Request} request
+ */
 async function handleRequest(request) {
   const { pathname } = new URL(request.url);
 
   if (pathname === '/') {
-    return handleRootRequest(); // 返回 HTML 页面
+    return handleRootRequest(); // 根路徑，返回 HTML 頁面
   } else if (pathname === '/upload' && request.method === 'POST') {
-    return handleUploadRequest(request); // 处理文件上传请求
+    return handleUploadRequest(request); // 處理檔案上傳請求
   } else {
     return new Response('Not Found', { status: 404 });
   }
 }
 
-// 处理根路径请求的函数，返回 HTML 页面
+/**
+ * 處理根路徑請求，返回操作介面的 HTML
+ */
 function handleRootRequest() {
   const html = `
   <!DOCTYPE html>
-  <html lang="zh-CN"
-<head>
+  <html lang="zh-TW">
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
-    <meta name="description" content="GitHub图床-基于Cloudflare Workers">
-    <meta name="keywords" content="GitHub图床,Workers图床, Cloudflare, Workers,GitHub, 图床">
-    <title>GitHub图床</title>
-    <link rel="icon" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNDguMDAwMDAwcHQiIGhlaWdodD0iNDguMDAwMDAwcHQiIHZpZXdCb3g9IjAgMCA0OC4wMDAwMDAgNDguMDAwMDAwIgogcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCI+Cgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw0OC4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiCmZpbGw9IiMwMDAwMDAiIHN0cm9rZT0ibm9uZSI+CjxwYXRoIGQ9Ik04MCA0MDUgbDAgLTM1IDY1IDAgNjUgMCAwIC0xNzUgMCAtMTc1IDM1IDAgMzUgMCAwIDE3NSAwIDE3NSA2NSAwCjY1IDAgMCAzNSAwIDM1IC0xNjUgMCAtMTY1IDAgMCAtMzV6Ii8+CjwvZz4KPC9zdmc+Cg==" type="image/x-icon">
-    <!-- 国内CDN - Bootstrap CSS -->
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/4.6.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <!-- 国内CDN - Bootstrap FileInput CSS -->
-    <link href="https://cdn.staticfile.org/bootstrap-fileinput/5.2.7/css/fileinput.min.css" type="text/css" rel="stylesheet" />
-    <!-- 国内CDN - Toastr CSS -->
-    <link href="https://cdn.staticfile.org/toastr.js/2.1.4/toastr.min.css" type="text/css" rel="stylesheet" />
-    <!-- 国内CDN - jQuery -->
-    <script src="https://cdn.staticfile.org/jquery/3.6.0/jquery.min.js" type="application/javascript"></script>
-    <!-- 国内CDN - Bootstrap FileInput JS -->
-    <script src="https://cdn.staticfile.org/bootstrap-fileinput/5.2.7/js/fileinput.min.js" type="application/javascript"></script>
-    <!-- 国内CDN - Bootstrap FileInput 中文语言包 -->
-    <script src="https://cdn.staticfile.org/bootstrap-fileinput/5.2.7/js/locales/zh.min.js" type="application/javascript"></script>
-    <!-- 国内CDN - Toastr JS -->
-    <script src="https://cdn.staticfile.org/toastr.js/2.1.4/toastr.min.js" type="application/javascript"></script>
+    <meta name="description" content="GitHub 圖床 - 基於 Cloudflare Workers">
+    <meta name="keywords" content="GitHub 圖床, Workers 圖床, Cloudflare, Workers, GitHub, 圖床">
+    <title>GitHub 圖床</title>
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/allen5218/img@main/img/20250815160508_stndghzmqg.ico" type="image/x-icon">
+    
+    <!-- 使用 cdnjs 和 jsdelivr 替換 CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
+    
     <style>
-    /* 替换谷歌字体为国内可访问的字体 */
-    @import url('https://fonts.proxy.ustclug.org/css2?family=Long+Cang&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Long+Cang&display=swap');
       
-      .title {
-          font-family: "Long Cang", cursive;
-          font-weight: 400;
-          font-style: normal;
-          font-size: 2em; /* 调整字体大小 */
-          text-align: center;
-          margin-top: 20px; /* 调整距离顶部的距离 */
-          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 添加阴影效果 */
+      :root {
+        --bg-day: #ffffff;
+        --text-day: #000000;
+        --border-day: #dee2e6;
+        --bg-night: #2c2c2c;
+        --text-night: #f5f5f5;
+        --border-night: #555555;
+        --card-bg-night: #333333;
       }
-      
-      /* 日间模式和夜间模式的样式 */
-      .day-mode {
-          background-color: #ffffff;
-          color: #000000;
+
+      body {
+        transition: background-color 0.3s, color 0.3s;
       }
-  
-      .night-mode {
-          background-color: #2c2c2c;
-          color: #f5f5f5;
-      }
-  
-      /* 按钮样式 */
-      .mode-toggle {
-          position: fixed;
-          top: 10px;
-          right: 10px;
-          background-color: transparent;
-          border: none;
-          font-size: 1.5em;
-          cursor: pointer;
-          z-index: 1000;
-      }
-  
-      /* 应用到整个页面的背景和文字颜色 */
-      body.night-mode {
-          background-color: #2c2c2c;
-          color: #f5f5f5;
-      }
-  
+
       body.day-mode {
-          background-color: #ffffff;
-          color: #000000;
+        background-color: var(--bg-day);
+        color: var(--text-day);
       }
   
-      /* 强制覆盖默认样式，确保在两种模式下都能应用 */
-      .card,
-      .card-body,
-      .form-group,
-      textarea,
-      select,
-      input[type="file"],
-      button {
-          background-color: inherit;
-          color: inherit;
-          border-color: inherit;
+      body.night-mode {
+        background-color: var(--bg-night);
+        color: var(--text-night);
       }
-  
+
+      .title-container {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      .title-image {
+        height: 7.5em; /* 放大三倍 */
+        width: auto;
+        filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+      }
+      
       .card {
-          box-shadow: none;
-          border: none;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
       }
-      /* 为其他元素定义样式 */
-.card, .card-body, .form-group, textarea, select, input[type="file"], button {
-    /* 默认样式 */
-    background-color: inherit;
-    color: inherit;
-    border-color: inherit;
-}
 
-/* 特定元素在夜间模式下的样式 */
-body.night-mode .card,
-body.night-mode .card-body,
-body.night-mode .form-group,
-body.night-mode textarea,
-body.night-mode select,
-body.night-mode input[type="file"],
-body.night-mode button {
-    background-color: #333333;
-    color: #ffffff;
-    border-color: #555555;
-}
-:root {
-  --background-color: #ffffff;
-  --text-color: #000000;
-  --border-color: #cccccc;
-}
+      .mode-toggle {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        background-color: transparent;
+        border: none;
+        font-size: 1.8em;
+        cursor: pointer;
+        z-index: 1000;
+        color: inherit;
+      }
 
-body.day-mode {
-  --background-color: #ffffff;
-  --text-color: #000000;
-  --border-color: #cccccc;
-}
+      /* 日間模式下的元件樣式 */
+      body.day-mode .card-body,
+      body.day-mode .form-control,
+      body.day-mode .custom-select,
+      body.day-mode .btn {
+        background-color: var(--bg-day);
+        color: var(--text-day);
+        border-color: var(--border-day);
+      }
 
-body.night-mode {
-  --background-color: #2c2c2c;
-  --text-color: #f5f5f5;
-  --border-color: #555555;
-}
-
-.card, .card-body, .form-group, textarea, select, input[type="file"], button {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  border-color: var(--border-color);
-}
-
-#fileLink {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  border-color: var(--border-color);
-}
-
-      </style>
+      /* 夜間模式下的元件樣式 */
+      body.night-mode .card-body,
+      body.night-mode .form-control,
+      body.night-mode .custom-select,
+      body.night-mode .btn,
+      body.night-mode .file-drop-zone {
+        background-color: var(--card-bg-night) !important;
+        color: var(--text-night) !important;
+        border-color: var(--border-night) !important;
+      }
+      body.night-mode .file-drop-zone-title {
+        color: #aaa !important;
+      }
+    </style>
   </head>
-  <body class="day-mode">
-      <!-- 模式切换按钮 -->
+  <body>
+      <!-- 模式切換按鈕 -->
       <button class="mode-toggle" id="modeToggle">🌙</button>
-      <div class="card">
-          <div class="title">Hello GitHub图床</div>
-          <div class="card-body">
-              <!-- 表单 -->
-              <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
-                  <!-- 接口选择下拉菜单 -->
-                  <div class="form-group mb-3">
-                      <select class="custom-select" id="interfaceSelector" name="interface">
-                          <option value="tg">GitHub</option>
-                      </select>
-                  </div>
-                  <!-- 文件选择 -->
-                  <div class="form-group mb-3">
-                      <input id="fileInput" name="file" type="file" class="form-control-file" data-browse-on-zone-click="true">
-                  </div>            
-                  <!-- 添加按钮组 -->
-                  <div class="form-group mb-3" style="display: none;"> <!-- 初始隐藏 -->
-                      <button type="button" class="btn btn-light mr-2" id="urlBtn">URL</button>
-                      <button type="button" class="btn btn-light mr-2" id="bbcodeBtn">BBCode</button>
-                      <button type="button" class="btn btn-light" id="markdownBtn">Markdown</button>
-                  </div>
-                  <!-- 文件链接文本框 -->
-                  <div class="form-group mb-3" style="display: none;"> <!-- 初始隐藏 -->
-                      <textarea class="form-control" id="fileLink" readonly></textarea>
-                  </div>
-                  <!-- 上传中的提示 -->
-                  <div id="uploadingText" style="display: none; text-align: center;">文件上传中...</div>
-                  <!-- 压缩中的提示 -->
-                  <div id="compressingText" style="display: none; text-align: center;">图片压缩中...</div>
-              </form>
-          </div>
-          <p style="font-size: 14px; text-align: center; position: fixed; bottom: 0; width: 100%; padding: 10px 0; solid #ccc;">
-              一叶知秋-魏无羡 GitHub - <a href="https://github.com/2091k/GitHub-image-hosting" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: none;">2091k/GitHub-image-hosting</a>
-          </p>
-      </div> 
+      
+      <div class="container mt-4">
+        <div class="card">
+            <div class="title-container">
+                <img src="https://cdn.jsdelivr.net/gh/allen5218/img@main/img/20250815155638_1pcaq6i75d.png" alt="GitHub 圖床標題" class="title-image">
+            </div>
+            <div class="card-body">
+                <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+                    <div class="form-group mb-3">
+                        <select class="custom-select" id="interfaceSelector" name="interface">
+                            <option value="github">GitHub</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input id="fileInput" name="file" type="file" class="form-control-file">
+                    </div>
+                    <!-- 連結格式按鈕組 -->
+                    <div id="formatButtons" class="form-group mb-3" style="display: none;">
+                        <button type="button" class="btn btn-light mr-2" id="urlBtn">URL</button>
+                        <button type="button" class="btn btn-light mr-2" id="bbcodeBtn">BBCode</button>
+                        <button type="button" class="btn btn-light" id="markdownBtn">Markdown</button>
+                    </div>
+                    <!-- 檔案連結顯示區 -->
+                    <div id="linkContainer" class="form-group mb-3" style="display: none;">
+                        <textarea class="form-control" id="fileLink" readonly rows="1"></textarea>
+                    </div>
+                    <!-- 狀態提示 -->
+                    <div id="statusText" style="display: none; text-align: center; margin-top: 10px;"></div>
+                </form>
+            </div>
+        </div>
+      </div>
+
+    <!-- 使用 cdnjs 和 jsdelivr 替換 CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/locales/zh-TW.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
 <script>
 $(document).ready(function() {
-  // 检查本地存储中是否有模式选择
-  if (localStorage.getItem('mode') === 'night') {
+  let originalImageURL = ''; // 用於儲存原始 URL
+
+  // --- 模式切換 ---
+  function applyMode(mode) {
+    if (mode === 'night') {
       $('body').addClass('night-mode').removeClass('day-mode');
-      $('#modeToggle').text('🌙');
-  } else {
-      $('body').addClass('day-mode').removeClass('night-mode');
       $('#modeToggle').text('🌞');
+    } else {
+      $('body').addClass('day-mode').removeClass('night-mode');
+      $('#modeToggle').text('🌙');
+    }
   }
-  // 模式切换逻辑
+
+  // 檢查本地儲存
+  const savedMode = localStorage.getItem('mode') || 'day';
+  applyMode(savedMode);
+
+  // 模式切換按鈕點擊事件
   $('#modeToggle').on('click', function() {
-      $('body').toggleClass('night-mode day-mode');
-
-      // 切换按钮图标
-      if ($('body').hasClass('night-mode')) {
-          $(this).text('🌙');
-          localStorage.setItem('mode', 'night');
-      } else {
-          $(this).text('🌞');
-          localStorage.setItem('mode', 'day');
-      }
-
-      // 强制更新所有相关元素的样式
-      $('.card, .card-body, .form-group, textarea, select, input[type="file"], button').css({
-          'background-color': $('body').css('background-color'),
-          'color': $('body').css('color'),
-          'border-color': $('body').css('border-color')
-        });
+    const isNight = $('body').hasClass('night-mode');
+    const newMode = isNight ? 'day' : 'night';
+    applyMode(newMode);
+    localStorage.setItem('mode', newMode);
   });
 
-  // 初始化文件上传 
-  initFileInput();
-  
-  // 文件上传初始化函数
+  // --- FileInput 初始化 ---
   function initFileInput() {
     $("#fileInput").fileinput({
-      theme: 'fa',
-      language: 'zh',
+      language: 'zh-TW',
       dropZoneEnabled: true,
       browseOnZoneClick: true,
-      dropZoneTitle: "拖拽或粘贴文件到这里...",
+      dropZoneTitle: "拖曳或貼上檔案到這裡...",
       dropZoneClickTitle: "",
       browseClass: "btn btn-light",
       uploadClass: "btn btn-light",
       removeClass: "btn btn-light",
       showUpload: false,
+      showPreview: false, // 隱藏預覽，簡化介面
+      showCaption: true,
       layoutTemplates: {
         actionZoom: '',
       },
     }).on('filebatchselected', handleFileSelection)
       .on('fileclear', handleFileClear);
   }
+  
+  initFileInput();
 
-  // 配置接口信息
+  // --- 介面設定 ---
   const interfaceConfig = {
-    tg: {
+    github: {
       acceptTypes: 'image/gif,image/jpeg,image/jpg,image/png,video/mp4',
-      gifAndVideoMaxSize: 5 * 1024 * 1024, // GIF 和视频文件的最大大小为 5MB
-      otherMaxSize: 5 * 1024 * 1024, // 非 GIF 和视频文件的最大大小为 5MB
-      compressImage: false //默认开启压缩
+      maxSize: 10 * 1024 * 1024, // 所有檔案最大 10MB
     },
-    // 添加其他接口的配置信息
   };
   
-  // 处理接口选择器变更事件  
+  // 根據選擇的介面更新 fileinput 的設定
   $('#interfaceSelector').change(function() {
     const selectedInterface = $(this).val();
-    const interfaceInfo = interfaceConfig[selectedInterface];
-    
-    if (interfaceInfo) {
-      $('#fileInput').attr('accept', interfaceInfo.acceptTypes);
+    const config = interfaceConfig[selectedInterface];
+    if (config) {
+      // 這裡可以根據不同介面更新設定，但目前只有一個，所以先保留
     }
   }).trigger('change');
   
-  // 处理文件选择事件  
-  async function handleFileSelection() {
-      const file = $('#fileInput')[0].files[0];
+  // --- 核心上傳邏輯 ---
   
-      if (file) {
-          await uploadFile(file);
+  // 處理檔案選擇
+  async function handleFileSelection(event, files) {
+      if (files && files.length > 0) {
+        await uploadFile(files[0]);
       }
   }
 
-  // 处理上传文件函数
+  // 處理檔案上傳
   async function uploadFile(file) {
-      try {
-          const selectedInterface = $('#interfaceSelector').val();
-          const interfaceInfo = interfaceConfig[selectedInterface];
-          
-          if (!interfaceInfo) {
-            console.error('未找到接口配置信息');
-            return;
-          }
-  
-          if (['image/gif', 'video/mp4'].includes(file.type)) {
-              if (file.size > interfaceInfo.gifAndVideoMaxSize) {
-                  toastr.error('文件必须≤' + interfaceInfo.gifAndVideoMaxSize / (1024 * 1024) + 'MB');
-                  return;
-              }
-              // 不压缩，直接上传原文件
-          } else {
-              if (interfaceInfo.compressImage === true) {
-                  const compressedFile = await compressImage(file);
-                  file = compressedFile;
-              } else if (interfaceInfo.compressImage === false) {
-                  if (file.size > interfaceInfo.otherMaxSize) {
-                      toastr.error('文件必须≤' + interfaceInfo.otherMaxSize / (1024 * 1024) + 'MB');
-                      return;
-                  }
-                  // 不压缩，直接上传原文件
-              }
-          }
-  
-          $('#uploadingText').show();
-          const formData = new FormData($('#uploadForm')[0]);
-          formData.set('file', file, file.name);
-          const uploadResponse = await fetch('/upload', { method: 'POST', body: formData });
-          originalImageURL = await handleUploadResponse(uploadResponse);
-          $('#fileLink').val(originalImageURL);
-          $('.form-group').show();
-          adjustTextareaHeight($('#fileLink')[0]);
-      } catch (error) {
-          console.error('上传文件时出现错误:', error);
-          $('#fileLink').val('文件上传失败！');
-      } finally {
-          $('#uploadingText').hide();
+    try {
+      const selectedInterface = $('#interfaceSelector').val();
+      const config = interfaceConfig[selectedInterface];
+      
+      if (!config) {
+        toastr.error('未找到介面設定資訊');
+        return;
       }
-  }
 
-  // 处理上传响应函数
-  async function handleUploadResponse(response) {
-    if (response.ok) {
+      if (file.size > config.maxSize) {
+        toastr.error('檔案大小不能超過 ' + config.maxSize / (1024 * 1024) + 'MB');
+        $("#fileInput").fileinput('clear');
+        return;
+      }
+
+      showStatus('檔案上傳中...');
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      const response = await fetch('/upload', { method: 'POST', body: formData });
+      
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.message || '上傳失敗');
+      }
+
       const result = await response.json();
-      return result.data;
-    } else {
-      return '文件上传失败！';
+      originalImageURL = result.data;
+      
+      handleUploadSuccess(originalImageURL);
+
+    } catch (error) {
+      console.error('上傳錯誤:', error);
+      handleUploadError(error.message);
+    } finally {
+      hideStatus();
     }
   }
-
-  // 监听粘贴事件
+  
+  // 處理貼上事件
   $(document).on('paste', function(event) {
-      // 获取粘贴板中的内容
-      const clipboardData = event.originalEvent.clipboardData;
-      if (clipboardData && clipboardData.items) {
-          // 遍历粘贴板中的项
-          for (let i = 0; i < clipboardData.items.length; i++) {
-              const item = clipboardData.items[i];
-              // 如果是文件类型
-              if (item.kind === 'file') {
-                  const pasteFile = item.getAsFile();
-                  // 上传粘贴的文件
-                  uploadFile(pasteFile);
-                  break; // 处理完第一个文件即可
-              }
-          }
+    const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+    for (const item of items) {
+      if (item.kind === 'file') {
+        const pasteFile = item.getAsFile();
+        if (pasteFile) {
+          uploadFile(pasteFile);
+          // 更新 fileinput 的顯示
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(pasteFile);
+          $('#fileInput')[0].files = dataTransfer.files;
+          // 觸發 change 事件讓 fileinput 知道檔案已更新
+          $('#fileInput').trigger('change');
+          break;
+        }
       }
+    }
   });
 
-  //处理图片压缩事件
-  async function compressImage(file, quality = 0.5, maxResolution = 20000000) {
-    $('#compressingText').show();
-  
-    return new Promise((resolve) => {
-      const image = new Image();
-      image.onload = () => {
-        const width = image.width;
-        const height = image.height;  
-        const resolution = width * height;  
-        let scale = 1;
-        if (resolution > maxResolution) {
-          scale = Math.sqrt(maxResolution / resolution);
-        }  
-        const targetWidth = Math.round(width * scale);
-        const targetHeight = Math.round(height * scale);  
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');  
-        canvas.width = targetWidth;
-        canvas.height = targetHeight;
-        ctx.drawImage(image, 0, 0, targetWidth, targetHeight); 
-        canvas.toBlob((blob) => {
-          const compressedFile = new File([blob], file.name, { type: 'image/jpeg' });
-          $('#compressingText').hide();
-          resolve(compressedFile);
-        }, 'image/jpeg', quality);
-      };  
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        image.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
+  // --- UI 更新函式 ---
+  function showStatus(message) {
+    $('#statusText').text(message).show();
+  }
+
+  function hideStatus() {
+    $('#statusText').hide();
   }
   
-  // 处理按钮点击事件 
+  function handleUploadSuccess(url) {
+    $('#fileLink').val(url);
+    $('#formatButtons, #linkContainer').show();
+    adjustTextareaHeight($('#fileLink')[0]);
+    toastr.success('上傳成功！');
+  }
+
+  function handleUploadError(errorMessage) {
+    $('#fileLink').val('檔案上傳失敗！ ' + errorMessage);
+    $('#formatButtons').hide();
+    $('#linkContainer').show();
+    adjustTextareaHeight($('#fileLink')[0]);
+    toastr.error('上傳失敗: ' + errorMessage);
+  }
+
+  // 處理清除按鈕
+  function handleFileClear() {
+    originalImageURL = '';
+    $('#fileLink').val('');
+    $('#formatButtons, #linkContainer').hide();
+  }
+  
+  // 處理格式按鈕點擊
   $('#urlBtn, #bbcodeBtn, #markdownBtn').on('click', function() {
-    const fileLink = originalImageURL.trim();
-    if (fileLink !== '') {
-      let formattedLink;
-      switch ($(this).attr('id')) {
-        case 'urlBtn':
-          formattedLink = fileLink;
-          break;
-        case 'bbcodeBtn':
-          formattedLink = '[img]' + fileLink + '[/img]';
-          break;
-        case 'markdownBtn':
-          formattedLink = '![image](' + fileLink + ')';
-          break;
-        default:
-          formattedLink = fileLink;
+    if (originalImageURL) {
+      let formattedLink = originalImageURL;
+      const id = $(this).attr('id');
+      if (id === 'bbcodeBtn') {
+        formattedLink = '[img]' + originalImageURL + '[/img]';
+      } else if (id === 'markdownBtn') {
+        formattedLink = '![image](' + originalImageURL + ')';
       }
       $('#fileLink').val(formattedLink);
       adjustTextareaHeight($('#fileLink')[0]);
-      copyToClipboardWithToastr(formattedLink);
+      copyToClipboard(formattedLink);
     }
   });
   
-  // 处理移除按钮点击事件 
-  function handleFileClear(event) {
-    $('#fileLink').val('');
-    adjustTextareaHeight($('#fileLink')[0]);
-    hideButtonsAndTextarea();
-  }
+  // --- 工具函式 ---
   
-  // 自动调整文本框高度函数
+  // 自動調整 textarea 高度
   function adjustTextareaHeight(textarea) {
-    textarea.style.height = '1px';
+    textarea.style.height = 'auto';
     textarea.style.height = (textarea.scrollHeight) + 'px';
   }
   
-  // 复制文本到剪贴板，并显示 toastr 提示框 
-  function copyToClipboardWithToastr(text) {
-    const input = document.createElement('input');
-    input.setAttribute('value', text);
-    document.body.appendChild(input);
-    input.select();
-    document.execCommand('copy');
-    document.body.removeChild(input);
-    toastr.success('已复制到剪贴板', '', { timeOut: 300 });
+  // 複製到剪貼簿
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+      toastr.success('已複製到剪貼簿');
+    }, function(err) {
+      toastr.error('複製失敗');
+      console.error('複製失敗: ', err);
+    });
   }
-  
-  // 隐藏按钮和文本框
-  function hideButtonsAndTextarea() {
-    $('#urlBtn, #bbcodeBtn, #markdownBtn, #fileLink').parent('.form-group').hide();
-  }
-  
 });
-
 </script>
 
 </body>
@@ -460,68 +386,46 @@ $(document).ready(function() {
     return new Response(html, { headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
   }
   
-// 处理上传请求的函数
+/**
+ * 處理檔案上傳請求並將其存儲到 GitHub
+ * @param {Request} request
+ */
 async function handleUploadRequest(request) {
   try {
+    // 檢查必要的環境變數是否存在
+    // 這些變數由 Cloudflare Worker 的設定注入，可以直接使用
+    if (typeof GITHUB_TOKEN === 'undefined' || GITHUB_TOKEN === '' || typeof REPO === 'undefined' || REPO === '') {
+        throw new Error('缺少 GITHUB_TOKEN 或 REPO 環境變數，請在 Worker 設定中配置');
+    }
+
+    // 為非必要的環境變數提供預設值
+    const branch = typeof BRANCH !== 'undefined' && BRANCH !== '' ? BRANCH : 'main';
+    const filePath = typeof FILE_PATH !== 'undefined' ? FILE_PATH : '';
+
     const formData = await request.formData();
     const file = formData.get('file');
 
     if (!file) {
-      throw new Error('Missing file');
+      throw new Error('請求中找不到檔案');
     }
 
     const originalFileName = file.name;
     const fileExtension = originalFileName.split('.').pop();
 
-    // 获取当前时间并转换为北京时间 (UTC+8)
+    // 生成基於時間和隨機數的唯一檔名
     const now = new Date();
-    const utcOffset = 8 * 60; // 北京时间为 UTC+8
-    now.setMinutes(now.getMinutes() + utcOffset);
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    
-    const formattedDate = `${year}${month}${day}${hours}${minutes}${seconds}`;
-
-    // 生成10位随机小写字母
+    const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
     const randomString = Math.random().toString(36).substring(2, 12);
+    const fileName = `${timestamp}_${randomString}.${fileExtension}`;
 
-    const fileName = `${formattedDate}_${randomString}.${fileExtension}`;
+    // 將檔案內容讀取為 ArrayBuffer，然後轉換為 Base64
+    const arrayBuffer = await file.arrayBuffer();
+    const base64Content = arrayBufferToBase64(arrayBuffer);
 
-    // 1. 检查文件是否已经存在
-    const checkUrl = `https://api.github.com/repos/${repo}/contents/${filePath}${fileName}?ref=${branch}`;
-    const checkResponse = await fetch(checkUrl, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${githubToken}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': 'Cloudflare Worker'
-      }
-    });
-
-    // 2. 准备上传文件
-    const fileStream = file.stream();
-    const reader = fileStream.getReader();
-    let fileContent = '';
-    let done = false;
-
-    // Convert file content to base64 in chunks
-    while (!done) {
-      const { value, done: readerDone } = await reader.read();
-      done = readerDone;
-      if (value) {
-        fileContent += String.fromCharCode(...new Uint8Array(value));
-      }
-    }
-
-    const base64Content = btoa(fileContent);
-    const uploadUrl = `https://api.github.com/repos/${repo}/contents/${filePath}${fileName}`;
+    const uploadUrl = `https://api.github.com/repos/${REPO}/contents/${filePath}${fileName}`;
 
     const uploadData = {
-      message: `上传图片: ${fileName}`,
+      message: `feat: upload image ${fileName} by Cloudflare Worker`,
       content: base64Content,
       branch: branch
     };
@@ -529,36 +433,47 @@ async function handleUploadRequest(request) {
     const uploadResponse = await fetch(uploadUrl, {
       method: 'PUT',
       headers: {
-        'Authorization': `Bearer ${githubToken}`,
+        'Authorization': `Bearer ${GITHUB_TOKEN}`,
         'Content-Type': 'application/json',
         'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': 'Cloudflare Worker'
+        'User-Agent': 'Cloudflare-Worker-GitHub-Uploader'
       },
       body: JSON.stringify(uploadData)
     });
 
-    const responseText = await uploadResponse.text();
-    const jsonResponse = JSON.parse(responseText);
+    const responseJson = await uploadResponse.json();
 
     if (uploadResponse.ok) {
-      // 下面链接替换成你自己的加速域名https://raw.githubusercontent.com/
-      const imageUrl = `https://raw.githubusercontent.com/${repo}/${branch}/${filePath}${fileName}`;
+      // 使用 jsDelivr CDN 加速連結
+      const imageUrl = `https://cdn.jsdelivr.net/gh/${REPO}@${branch}/${filePath}${fileName}`;
       return new Response(JSON.stringify({ data: imageUrl }), {
         status: 201,
         headers: { 'Content-Type': 'application/json' }
       });
     } else {
-      console.error('GitHub upload failed:', responseText);
-      return new Response(JSON.stringify({ error: 'GitHub upload failed', details: responseText }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      console.error('GitHub 上傳失敗:', responseJson);
+      throw new Error(responseJson.message || 'GitHub API 錯誤');
     }
   } catch (error) {
-    console.error('Internal Server Error:', error.message);
-    return new Response(JSON.stringify({ error: 'Internal Server Error', message: error.message }), {
+    console.error('伺服器內部錯誤:', error.stack);
+    return new Response(JSON.stringify({ error: '伺服器內部錯誤', message: error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
   }
+}
+
+/**
+ * 將 ArrayBuffer 轉換為 Base64 字串
+ * @param {ArrayBuffer} buffer
+ * @returns {string}
+ */
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
 }
