@@ -394,19 +394,23 @@ async function handleUploadRequest(request) {
   try {
     // 檢查必要的環境變數是否存在
     // 這些變數由 Cloudflare Worker 的設定注入，可以直接使用
+    // @ts-ignore
     if (typeof GITHUB_TOKEN === 'undefined' || GITHUB_TOKEN === '' || typeof REPO === 'undefined' || REPO === '') {
         throw new Error('缺少 GITHUB_TOKEN 或 REPO 環境變數，請在 Worker 設定中配置');
     }
 
     // 為非必要的環境變數提供預設值
+    // @ts-ignore
     const branch = typeof BRANCH !== 'undefined' && BRANCH !== '' ? BRANCH : 'main';
+    // @ts-ignore
     const filePath = typeof FILE_PATH !== 'undefined' ? FILE_PATH : '';
 
     const formData = await request.formData();
     const file = formData.get('file');
 
-    if (!file) {
-      throw new Error('請求中找不到檔案');
+    // 增加對 file 型別的檢查，確保它是 File 物件
+    if (!(file instanceof File)) {
+      throw new Error('請求中找不到有效的檔案');
     }
 
     const originalFileName = file.name;
@@ -421,7 +425,8 @@ async function handleUploadRequest(request) {
     // 將檔案內容讀取為 ArrayBuffer，然後轉換為 Base64
     const arrayBuffer = await file.arrayBuffer();
     const base64Content = arrayBufferToBase64(arrayBuffer);
-
+    
+    // @ts-ignore
     const uploadUrl = `https://api.github.com/repos/${REPO}/contents/${filePath}${fileName}`;
 
     const uploadData = {
@@ -433,6 +438,7 @@ async function handleUploadRequest(request) {
     const uploadResponse = await fetch(uploadUrl, {
       method: 'PUT',
       headers: {
+        // @ts-ignore
         'Authorization': `Bearer ${GITHUB_TOKEN}`,
         'Content-Type': 'application/json',
         'Accept': 'application/vnd.github.v3+json',
@@ -445,6 +451,7 @@ async function handleUploadRequest(request) {
 
     if (uploadResponse.ok) {
       // 使用 jsDelivr CDN 加速連結
+      // @ts-ignore
       const imageUrl = `https://cdn.jsdelivr.net/gh/${REPO}@${branch}/${filePath}${fileName}`;
       return new Response(JSON.stringify({ data: imageUrl }), {
         status: 201,
@@ -456,6 +463,7 @@ async function handleUploadRequest(request) {
     }
   } catch (error) {
     console.error('伺服器內部錯誤:', error.stack);
+    // @ts-ignore
     return new Response(JSON.stringify({ error: '伺服器內部錯誤', message: error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
